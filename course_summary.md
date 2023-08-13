@@ -48,18 +48,18 @@ There are various methods available to tune the coefficients of the above formul
 
 		best_err = evaluate(p)
 		while sum(p) < Tolerance:
-			for $p_i$ in p:
-				$p_i$ += $dp_i$
+			for p_i in p:
+				p_i += dp_i
 				err = evaluate(p)
 				if err < best_err:
 					best_err = err
-					$dp_i$ *= 1.1
+					dp_i *= 1.1
 				else
-					$p_i$ -= 2*$dp_i$
+					p_i -= 2*dp_i
 					err = evaluate(p)
 					if err < best_err:
 						best_err = err
-						$dp_i$ *= 1.1
+						dp_i *= 1.1
 					else
-					    $p_i$ += $dp_i$
-						$dp_i$ *= 0.9
+					    p_i += dp_i
+						dp_i *= 0.9
