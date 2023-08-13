@@ -7,7 +7,12 @@ Making a self-driving car is a cool system work. We use data from computer visio
 ## Computer Vision
 
 <p align='justify'>
-
+The pipeline of finding lane lines consisted of the following 5 steps:
+1. convert the image to gray scale
+2. apply a Gaussian filter to blur the gray scale image
+3. apply Canny Edge Detector to the blured gray scale image
+4. apply Hough Transform to detect the lines
+5. draw the lines on the image
 </p> 
 
 ## Deep Learning
@@ -19,8 +24,24 @@ Making a self-driving car is a cool system work. We use data from computer visio
 ## Localization
 
 <p align='justify'>
-
+each particle is a single guess. particles: discrete guesses of the location of the robot. set of particles together comprise a approximate representation of the posterior of the location of the robot. particle filter makes the particles survive based on their corresponding degree of consistencies with the sensor measurements. 
 </p> 
+
+|                    | State Space   | Belief        | Efficiency    | In Robotics   |
+| -------------------|:-------------:|:-------------:|:-------------:|:-------------:|
+| Histogram Filters  | Discrete      | multimodal    | Exponential   | approximate   |
+| Kalman Filters     | Continuous    | unimodal      | quadratic     | approximate   | 
+| Particle Filters   | Continuous    | multimodal    | not sure yet  | approximate   | 
+
+<p align='justify'>
+In Particle Filters, we have measurement updates and motion updates. The following explains the math behind it. X represents the states. X^{\prime} represents the states of the next time step. Z represents the measurements. P(X) is the prior, which means the distribution of a set of particles. P(Z|X) is the likelihood, which means importance weights. P(X|Z) is the posterior. As for Particle Filters, measurement updates is a resampling process. P(X^{\prime}) is the distribution of the above set of particles the next time step and it is the convolution of the transition probability P(X^{\prime}|X) times the prior P(X). The mathematical descriptions of measurement updates and motion updates are shown below. 
+</p>
+
+Measurement Updates
+$P(X|Z) \propto P(Z|X) \dot P(X)$
+
+Motion Updates
+$P(X^{\prime}) = \sum P(X^{\prime}|X) \dot P(X)$
 
 ## Path Plannning
 
