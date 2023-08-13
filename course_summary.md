@@ -63,3 +63,7 @@ There are various methods available to tune the coefficients of the above formul
 					else
 					    p_i += dp_i
 						dp_i *= 0.9
+
+<p align='justify'>
+Model Predictive Control reframes the task of following a trajectory to a optimization problem. The solution to the problem is the optimal trajectory, which is selected based on the minimal costs by simulating multiple actuator inputs to generate multiple trajectories. The optimal trajectory is re-calculated after the first set of actuation commands because our model is only an approximation to the real world. In this way, the actuation commands are optimized in each time step to minimize the cost of our prediceted trajectory. 
+</p> 
