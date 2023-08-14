@@ -26,7 +26,11 @@ For localization, we apply Bayes Filter, which is a general framework for recurs
 </p> 
 
 <p align='justify'>
-In Particle Filters, each particle is a single and discrete estimation of the states. A set of particles together comprise a approximate representation of the posterior of the states estimations. Particle filter makes the particles survive based on their corresponding degree of consistencies with the sensor measurements. The following explains the math behind Particle Filters. $X$ represents the states. $X^{\prime}$ represents the states of the next time step. $Z$ represents the measurements. $P(X)$ is the prior, which means the distribution of a set of particles. $P(Z|X)$ is the likelihood, which means importance weights. $P(X|Z)$ is the posterior. As for Particle Filters, measurement updates is a resampling process. $P(X^{\prime})$ is the distribution of the above set of particles the next time step and it is the convolution of the transition probability $P(X^{\prime}|X)$ times the prior $P(X)$. The mathematical descriptions of measurement updates and motion updates are shown below.
+In Particle Filters, each particle is a single and discrete estimation of the states. A set of particles together comprise a approximate representation of the posterior of the states estimations. The following process describes the working flow of Particle Filters. $X_{t-1}$ is the states of a set of particles at time $t-1$. $u_t$ is the control input at time $t$. $z_t$ is the measurement at time $t$. First, by applying the motion model, the state of each particle in the set $x^{i}_t$ can be obtained from its state at time $t-1$ and $u_t$. Second, by applying the observation model, the weight of each particle $w^{i}_t$ can be updated based on $x^{i}_t$ and $z_t$. This weight measures the corresponding degree of consistencies of a particle with the sensor measurements. Third, resampling makes each particle survive based on their weight to form a new set of particles resampled.  
+</p> 
+
+<p align='justify'>
+The following explains the math behind Particle Filters. $X$ represents the states. $X^{\prime}$ represents the states of the next time step. $Z$ represents the measurements. $P(X)$ is the prior, which means the distribution of a set of particles. $P(Z|X)$ is the likelihood, which means importance weights. $P(X|Z)$ is the posterior. As for Particle Filters, measurement updates is a resampling process. $P(X^{\prime})$ is the distribution of the above set of particles the next time step and it is the convolution of the transition probability $P(X^{\prime}|X)$ times the prior $P(X)$. The mathematical descriptions of measurement updates and motion updates are shown below.
 </p> 
 
 **Measurement Updates**
@@ -36,33 +40,6 @@ $P(X|Z) \propto P(Z|X) \cdot P(X)$
 **Motion Updates**
 
 $P(X^{\prime}) = \sum P(X^{\prime}|X) \cdot P(X)$
-
-<p align='justify'>
-The peseudo code of Particle Filter is shown below. 
-</p>
-
-    Particle Filter ($X_{t-1}$,$u_t$,$z_t$):
-    	$X_{t-1}$ is the   
-		dp is the step of tunning parameter initialized as 1
-		err = evaluate(p) returns the error of using parameters p
-
-		best_err = evaluate(p)
-		while sum(p) < Tolerance:
-			for p_i in p:
-				p_i += dp_i
-				err = evaluate(p)
-				if err < best_err:
-					best_err = err
-					dp_i *= 1.1
-				else
-					p_i -= 2*dp_i
-					err = evaluate(p)
-					if err < best_err:
-						best_err = err
-						dp_i *= 1.1
-					else
-						p_i += dp_i
-						dp_i *= 0.9
 
 <p align='justify'>
 The following table lists the similarities and differences of Histogram Filters, Kalman Filters and Particle Filters in various aspects. 
@@ -95,27 +72,27 @@ There are various methods available to tune the coefficients of the above formul
 </p> 
 
     Twiddle:
-    	$p$ is the parameter vector initialized as $0$ 
-		$dp$ is the step of tunning parameter initialized as $1$
-		err = evaluate($p$) returns the error of using parameters $p$
+    	p is the parameter vector initialized as 0 
+		dp is the step of tunning parameter initialized as 1
+		err = evaluate(p) returns the error of using parameters p
 		
-		best_err = evaluate($p$)
-		while sum($p$) < Tolerance:
-			for $p_i$ in $p$:
-				$p_i$ += $dp_i$
-				err = evaluate($p$)
+		best_err = evaluate(p)
+		while sum(p) < Tolerance:
+			for p_i in p:
+				p_i += dp_i
+				err = evaluate(p)
 				if err < best_err:
 					best_err = err
-					$dp_i *= 1.1$
+					dp_i *= 1.1
 				else
-					$p_i -= 2*dp_i$
-					err = evaluate($p$)
+					p_i -= 2*dp_i
+					err = evaluate(p)
 					if err < best_err:
 						best_err = err
-						$dp_i *= 1.1$
+						dp_i *= 1.1
 					else
-						$p_i += dp_i$
-						$dp_i *= 0.9$
+						p_i += dp_i
+						dp_i *= 0.9
 
 <p align='justify'>
 Model Predictive Control reframes the task of following a trajectory to a optimization problem. The solution to the problem is the optimal trajectory, which is selected based on the minimal costs of multiple trajectories generated by simulating multiple actuator inputs. The optimal trajectory is re-calculated after the first set of actuation commands because our model is only an approximation to the real world. In this way, the actuation commands are optimized in each time step to minimize the cost of our prediceted trajectory. 
