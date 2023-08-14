@@ -4,7 +4,7 @@
 Making a self-driving car is a cool system work. We use data from computer vision and sensor fusion to understand the environment around us. We also use data from localization to understand where we are in that environment. The path planning block uses all the above data to decide which manuever to take next. Then it constructs the trajectory for the controller to execute. Here is a short summary of computer vision, deep learning, localization, path planning and control taught in this course. The summary of sensor fusion part is at the following link (https://github.com/Ly2017To/Sensor_Fusion/blob/master/course_summary.md).
 </p> 
 
-## Computer Vision
+## Computer Vision and Deep Learning
 
 <p align='justify'>
 The pipeline of finding lane lines consisted of the following 5 steps:
@@ -14,8 +14,6 @@ The pipeline of finding lane lines consisted of the following 5 steps:
 4. apply Hough Transform to detect the lines
 5. draw the lines on the image
 </p> 
-
-## Deep Learning
 
 <p align='justify'>
 
@@ -32,10 +30,16 @@ In Particle Filters, each particle is a single and discrete estimation of the st
 </p> 
 
 **Measurement Updates**
+
 $P(X|Z) \propto P(Z|X) \cdot P(X)$
 
 **Motion Updates**
+
 $P(X^{\prime}) = \sum P(X^{\prime}|X) \cdot P(X)$
+
+<p align='justify'>
+
+</p>
 
 <p align='justify'>
 The following table lists the similarities and differences of Histogram Filters, Kalman Filters and Particle Filters in various aspects. 
@@ -87,7 +91,7 @@ There are various methods available to tune the coefficients of the above formul
 						best_err = err
 						dp_i *= 1.1
 					else
-					    p_i += dp_i
+						p_i += dp_i
 						dp_i *= 0.9
 
 <p align='justify'>
