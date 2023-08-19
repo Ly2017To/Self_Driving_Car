@@ -11,11 +11,12 @@ Computer Vision enables computer to "see" and "understand". Finding lane lines f
 </p> 
 
 <p align='justify'>
-
+In real world applications, additional steps need to be taken. Before using a camera to take pictures, camera calibration is needed to correct images distortions. For pinhole cameras, radial distortion and tangential distortion are the two major kinds of distortions. Images stored in RGB color space might lose some useful information for detecting lanes at some conditions. HSV and HSL are another two color spaces. For edge detections, it increases robustness by combining gradient intensity with thresholding different fields of color spaces. For drawing the lane lines, by applying a perspective transform on the image to have a good view of region and interest and then applying sliding window method to detect lanes based on detected edges.
 </p> 
 
 <p align='justify'>
-Deep Learning is a fantastic field and is widely applied in computer vision. 
+Deep Learning is a fantastic field and is widely applied in computer vision. Starting from Neural Networks, this courses introduces. 
+It learns features of objects from layer to layer 
 </p> 
 
 
