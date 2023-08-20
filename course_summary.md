@@ -15,15 +15,17 @@ In real world applications, additional steps need to be taken. Before using a ca
 </p> 
 
 <p align='justify'>
-Deep Learning is a fantastic field and is widely applied in computer vision. Starting from Neural Networks, this courses introduces. 
-It learns features of objects from layer to layer 
-</p> 
+Deep Learning is a fantastic field and is widely applied in computer vision. This course introduces NN(Neural Network), CNN(Convolutional Neural Network) and FCN(Fully Convolutional Network). The following contents provides a brief introduction and it is worthwhile to spend time to read research papers to have a deeper understanding. An NN is comprised of layers of nodes connected with each other, including an input layer, hidden layer(s) and an output layer. Each node is neuron, which has an input, an activation function and an output. The connections of a node with the other nodes are modeled by weights. Thus, from inputs, an output of an NN can be obtained by matrix multiplications of outputs of nodes of each layer and their corresponding weights. Notice that activation functions introduce non-linearily, so an NN can express both linear and non-linear model. The parameters(weights) of a model is learnt by training, which is the process of using a set of data of a particular task to tune these parameters. When the parameters are tuned to satisfy certain criteria, the model can be applied to inference, which is a process to make predictions about the data of the a particular task.
+</p>
 
+<p align='justify'>
+CNN is widely used in image classification field. A CNN consists of an input layer, convolutional layers, pooling layers, fully connected layers and an output layer. Convolutional layers are used to learn features of input. An analogy is cross correlation used in signal processing to detect pressence of signals. A pooling layer usually follows a convolutional layer to extract the important features. In this way, a CNN learns features of input from lower level to higher level layer by layer. For instance, for an image classification task, lower level features are edges, gradient orientations and so on, while higher level features are more complicated like items, scenes and so on. The last layer of high level features are the input to the fully connected layers to do the classification or regression task. The output of fully connected layer is the input to the output layer to generate the desired output. FCN is mainly used in semantic segmentation field. An FCN consists of an input layer, convolutional layers, pooling layers, deconvolutional layers and an output layer. Comparing with the architecture of CNN, FCN substitudes fully connected layers with deconvolutional layers. Convolutional layers and pooling layers are used to extract features of the input. Deconvolutional layers are used to perform upsampling, which recover the size of extract features to the original input for localizing the features in the original input. This is an important process to achieve pixel-level classification of the input image.
+</p>
 
 ## Localization
 
 <p align='justify'>
-For localization, we apply Bayes Filter, which is a general framework for recursive state estimation. Recursive means only the last state, current control and current observations are used to estimate the current state. In addition, the motion model describes the prediction step of the filter and the observation model describes the update step of the filter to estimate the new states. Thus, Kalman Filters and Particle Filters are realizations of Bayes Filters. 
+For localization, we apply Bayes Filter, which is a general framework for recursive state estimation. Recursive means only the last training and inference state, current control and current observations are used to estimate the current state. In addition, the motion model describes the prediction step of the filter and the observation model describes the update step of the filter to estimate the new states. Thus, Kalman Filters and Particle Filters are realizations of Bayes Filters. 
 </p> 
 
 <p align='justify'>
