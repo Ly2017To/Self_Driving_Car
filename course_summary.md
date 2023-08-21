@@ -58,8 +58,35 @@ The following table lists the similarities and differences of Histogram Filters,
 ## Path Plannning
 
 <p align='justify'>
+Path Planning includes behaviour planning, prediction and trajectory planning. Behaviour Planning provides guidance to trajectory planners about feasible, safe, legal and efficient manuevers they should plan trajectories for. The inputs to the behaviour planning module are from localization module and prediction module. The output of the behaviour planning module goes into trajectory planning module, which also takes inputs from prediction module and localization module. The output of trajectory planning module goes into motion control. Note that behaviour planning has no responsibility for execution details and collision avoidance. A way to solve behaviour planning is the Finite State Machine, which is a mathematical model to describe system states and states transitions triggered by inputs. For our high way driving example, there are seven states including Ready, Lane Keep, Lane Change Left, Prepare for lane change left, Lane Change Right and Prepare for lane change right. States transitions triggered by inputs come along with costs, which can be modeled by cost functions mathematically. The input to cost functions are predictions, map, speed limit, localization and current state. When designing cost functions, we use different weights to address various problems encountered. The priorities of issues addressed are feasibility, safety, legality, comfort and efficiency. Prediction module takes inputs from localization and sensor fusion and generates predictions of future states of the other moving objects as outputs, which are represented by trajectories and corresponding probabilities. There are two main prediction techniques called modal-based approach and data-driven approach. Modal-based approach uses mathematical modals of motion to predict trajectories, while data-driven approach relies on data and machine learning to learn from.
+</p>
 
-</p> 
+<p align='justify'>
+A feasible motion planning means to find a sequence of movements in configuration space that moves our robot from start configuration to goal configuration without hitting any obstacles. The properties of motion planning algorithms are completeness and optimality. The completeness means if a solution exists, planner always finds a solution. if no solution exists, terminates and reports failure. The optimality means given a cost function for evaluating a sequence of actions, planner always returns a feasible sequence of actions with minimal costs. There are several classes of motion planning algorithms, including combinatorial methods, potential field, optimal control and sampling methods. Sampling methods use a collision detection module to probe the free space to see if a configuration is in collision or not and the explored parts are stored in a graph structure that can be searched with graph search algorithm. A star algorithm belongs to discrete sampling methods and recursively traverses accessible positions from starting position to goal position guided by a heuristic cost function, so it always finds an optimal path from starting position to goal position. Due to its discrete nature, it may find paths that are not drivable. Hybrid A star algorithm belongs to continuous sampling methods and generates a drivable path by traversing conform to kinematics. It is worthwhile to take time to read research paper about it. The following two tables compare the above two algorithms in various aspects.
+</p>
+
+|                                                                        | A Star   | Hybrid A Star | 
+| -----------------------------------------------------------------------|:--------:|:-------------:|
+| It is a continuous method                                              | False    | True          |
+| It uses an optimistic heuristic function to guide grid cell expansion  | True     | True          | 
+| It always finds a solution if it exists                                | True     | False         | 
+| Solutions it finds are drivable                                        | False    | True          |
+| Solutions it finds are always optional                                 | True     | False         |
+
+<p align='justify'>
+For generating trajectory of a self driving car on the road, we consider Frenet coordinate system. Frenet has two dimensions $s$ and $d$, among which $s$ represents longitudinal motion and $d$ represents lateral motion. When planning a trajectory in a dynamic environment, it is important to not just compute a sequence of configurations, but to decide when we are going to be in each configuration. Our goal is to generate continuous trajectory. We also have longitudinal constraints and lateral constraints. In addition, we need position continuity and velocity continuity. People feel discomfort when jerk is high. Notice that jerk is the third derivative of position. 
+</p>
+
+<p align='justify'>
+Let us first consider one dimensional trajectory $s(t)$. Suppose the goal is to minimize the square of jerk in a time interval from $0$ to $t_f$, the trajectory is a fifth order polynomial $s(t) = a_0 + a_1 \cdot t + a_2 \cdot t^2 + a_3 \cdot t^3 + a_4 \cdot t^4 + a_5 \cdot t^5$. Thus, we have six parameters to solve and we can solve it by providing six boundary conditions, such as position of start state, velocity of start state, acceleration of start state, position of goal state, velocity goal state and acceleration of goal state. By taking the above six boundary conditions and the time duration to a polynomial solver, the above six parameters can be generated. The trajectory on the other dimension $d(t)$ can be generated by the same way. There are some points need to be checked for a trajectory solution, including maximum velocity, minimum velocity, maximum acceleration, minimum acceleration and steering angle. When selecting trajectories, distance to obstacles, distance to center line and time to goal need to be considered. In reality, self driving cars have several trajectory planners to use depending on the situations. For example, hybrid A star for parking lots and polynomial trajectory generation for low traffic high way. The following table compares the above driving environmental conditions.
+</p>
+
+|                | Unstructed           | Structed                                          | 
+| ---------------|:--------------------:|:-------------------------------------------------:|
+| Example        | Parking lot, Maze    | High Way, Street Driving                          |
+| Rules          | Less Specific Rules  | Predefined Rules                                  | 
+| Reference Path | Not Obvious          | Road Structure can be used as a reference         |
+
 
 ## Control
 
